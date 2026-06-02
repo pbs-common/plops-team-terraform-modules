@@ -1,0 +1,63 @@
+name: Sync Template
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1'  # Every Monday at 00:00 UTC
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install -r requirements.txt
+
+      # PAT needed to clone the private template repository
+      - name: Configure git auth for template
+        run: |
+          git config --global url."https://${{ secrets.TF_MODULES_PAT }}@github.com/pbs-common/".insteadOf "git@github.com:pbs-common/"
+
+      - name: Run template sync
+        run: python scripts/sync_template.py
+
+      - name: Check for changes
+        id: git-diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      # IMPORTANT: remove PAT rewrite before pushing
+      - name: Remove PAT auth
+        if: steps.git-diff.outputs.changed == 'true'
+        run: |
+          git config --global --unset-all url."https://${{ secrets.TF_MODULES_PAT }}@github.com/pbs-common/".insteadOf
+
+      - name: Create Pull Request
+        if: steps.git-diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: auto/sync-template
+          base: main
+          title: "chore: sync tooling from terraform-modules-template"
+          body: |
+            This PR was created automatically by the sync-template workflow.
+            - Runs `./scripts/sync_template.py` to pull the latest scripts, workflows, and tooling from [terraform-modules-template](https://github.com/pbs-common/terraform-modules-template).
+            - Repository-specific files (`config.yaml`, `modules/`, `README.md`) are never touched.
+          commit-message: "chore: sync tooling from terraform-modules-template"
+          delete-branch: true

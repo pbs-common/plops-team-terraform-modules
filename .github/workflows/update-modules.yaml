@@ -1,0 +1,79 @@
+name: Update Terraform Modules
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'config.yaml'  # Trigger when a config refresh PR is merged to main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-modules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install -r requirements.txt
+
+      # PAT for reading tf module repos
+      - name: Configure git auth for modules
+        run: |
+          git config --global url."https://${{ secrets.TF_MODULES_PAT }}@github.com/pbs-common/".insteadOf "git@github.com:pbs-common/"
+
+      - name: Run update
+        run: |
+          python scripts/tfmodules.py update
+
+      - name: Run readme
+        run: |
+          python scripts/tfmodules.py readme
+
+      - name: Check for changes
+        id: git-diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get config version
+        if: steps.git-diff.outputs.changed == 'true'
+        id: config-version
+        run: |
+          VERSION=$(yq '.version' config.yaml)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # IMPORTANT: remove PAT rewrite before pushing
+      - name: Remove PAT auth
+        if: steps.git-diff.outputs.changed == 'true'
+        run: |
+          git config --global --unset-all url."https://${{ secrets.TF_MODULES_PAT }}@github.com/pbs-common/".insteadOf
+
+      - name: Create Pull Request
+        if: steps.git-diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: auto/update-modules-${{ steps.config-version.outputs.version }}
+          base: main
+          title: "chore: update modules to version ${{ steps.config-version.outputs.version }}"
+          body: |
+            This PR was created automatically after merging a config refresh to main.
+            - Runs `./scripts/tfmodules.py update` to update all module submodules.
+            - Runs `./scripts/tfmodules.py readme` to update the modules section in the README.
+            - Updates the `modules/` directory and `README.md` to reflect the new config.
+            - Creates a tag `${{ steps.config-version.outputs.version }}`
+          commit-message: "chore: update modules and README after config refresh (${{ steps.config-version.outputs.version }})"
+          delete-branch: true

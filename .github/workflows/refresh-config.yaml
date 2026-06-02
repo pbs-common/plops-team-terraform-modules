@@ -1,0 +1,70 @@
+name: Refresh Configuration
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install -r requirements.txt
+
+      # PAT for reading tf module repos
+      - name: Configure git auth for modules
+        run: |
+          git config --global url."https://${{ secrets.TF_MODULES_PAT }}@github.com/pbs-common/".insteadOf "git@github.com:pbs-common/"
+
+      - name: Run refresh
+        run: python scripts/tfmodules.py refresh
+
+      - name: Check for config changes
+        id: git-diff
+        run: |
+          if git diff --quiet config.yaml; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get new config version
+        if: steps.git-diff.outputs.changed == 'true'
+        id: config-version
+        run: |
+          VERSION=$(yq '.version' config.yaml)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # IMPORTANT: remove PAT rewrite before pushing
+      - name: Remove PAT auth
+        if: steps.git-diff.outputs.changed == 'true'
+        run: |
+          git config --global --unset-all url."https://${{ secrets.TF_MODULES_PAT }}@github.com/pbs-common/".insteadOf
+
+      - name: Create Pull Request
+        if: steps.git-diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: auto/update-config-${{ steps.config-version.outputs.version }}
+          base: main
+          title: "chore: update config to version ${{ steps.config-version.outputs.version }}"
+          body: |
+            This PR was created automatically by the auto-refresh-config workflow.
+            - Runs `./scripts/tfmodules.py refresh`
+            - Updates `config.yaml` to the latest module versions.
+          commit-message: "chore: updated config to version ${{ steps.config-version.outputs.version }}"
+          delete-branch: true

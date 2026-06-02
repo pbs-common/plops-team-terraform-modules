@@ -1,0 +1,26 @@
+# Example Terraform modules configuration file.
+# Fill in your team name and add modules as needed.
+# 
+# - name: Unique name for the module (used as submodule directory)
+# - source: Git URL to the Terraform module repository (SSH or HTTPS)
+# - version: Git tag or version to use for the module
+# - lock: true/false, if true the module version will not be updated by refresh
+
+version: 1.0.0
+team: your-team-name
+repositories:
+  # - your-org/your-repo-1
+  # - your-org/another-repo
+modules:
+  # - name: example-module
+  #   source: git@github.com:your-org/terraform-example-module.git
+  #   version: 1.2.3
+  #   lock: false
+  # - name: another-module
+  #   source: https://github.com/your-org/terraform-another-module.git
+  #   version: 0.1.0
+  #   lock: true
+
+# To add a module, copy and edit the example above.
+# - 'lock: true' prevents the version from being updated by the refresh command.
+# - 'lock: false' allows the version to be updated.

@@ -1,26 +1,114 @@
-# Example Terraform modules configuration file.
-# Fill in your team name and add modules as needed.
-# 
-# - name: Unique name for the module (used as submodule directory)
-# - source: Git URL to the Terraform module repository (SSH or HTTPS)
-# - version: Git tag or version to use for the module
-# - lock: true/false, if true the module version will not be updated by refresh
-
 version: 1.0.0
-team: your-team-name
+team: plops
 repositories:
-  # - your-org/your-repo-1
-  # - your-org/another-repo
+- pbs-digital/vrm
+- pbs-digital/jira-tickets-aws-scheduled-events
+- pbs-digital/aws-organizations-non-negotiables
+- pbs-digital/slack-ri-status
+- pbs-digital/heartcore
+- pbs-digital/sonarqube
+- pbs/ecs-ec2-infrastructure
+- pbs/gha-self-hosted-runner
+- pbs/cloudwatch-synthetics
+- pbs/pbs-loads
+- pbs-common/pbs-tools-haproxy
+- pbs-common/pbs-tools-relay
+- pbs-common/pbs-tools-nexus
+- pbs-common/redirector_api
 modules:
-  # - name: example-module
-  #   source: git@github.com:your-org/terraform-example-module.git
-  #   version: 1.2.3
-  #   lock: false
-  # - name: another-module
-  #   source: https://github.com/your-org/terraform-another-module.git
-  #   version: 0.1.0
-  #   lock: true
-
-# To add a module, copy and edit the example above.
-# - 'lock: true' prevents the version from being updated by the refresh command.
-# - 'lock: false' allows the version to be updated.
+- name: app-mesh
+  source: git@github.com:pbs-common/terraform-aws-app-mesh-module.git
+  version: 1.0.1
+  lock: false
+- name: cloudfront
+  source: git@github.com:pbs-common/terraform-aws-cloudfront-module.git
+  version: 4.0.2
+  lock: false
+- name: cloudwatch-alarms
+  source: git@github.com:pbs-common/terraform-aws-cloudwatch-alarms-module.git
+  version: 1.1.0
+  lock: false
+- name: cloudwatch-event-rule
+  source: git@github.com:pbs-common/terraform-aws-cloudwatch-event-rule-module.git
+  version: 1.0.1
+  lock: false
+- name: dynamodb
+  source: git@github.com:pbs-common/terraform-aws-dynamodb-module.git
+  version: 1.0.1
+  lock: false
+- name: ecr
+  source: git@github.com:pbs-common/terraform-aws-ecr-module.git
+  version: 1.0.1
+  lock: false
+- name: ecs-cluster
+  source: git@github.com:pbs-common/terraform-aws-ecs-cluster-module.git
+  version: 2.0.1
+  lock: false
+- name: ecs-service
+  source: git@github.com:pbs-common/terraform-aws-ecs-service-module.git
+  version: 11.0.0
+  lock: false
+- name: ecs-task-definition
+  source: git@github.com:pbs-common/terraform-aws-ecs-task-definition-module.git
+  version: 3.0.2
+  lock: false
+- name: efs
+  source: git@github.com:pbs-common/terraform-aws-efs-module.git
+  version: 1.0.1
+  lock: false
+- name: elasticache-memcached
+  source: git@github.com:pbs-common/terraform-aws-elasticache-memcached-module.git
+  version: 2.1.0
+  lock: false
+- name: iam-role
+  source: git@github.com:pbs-common/terraform-aws-iam-role-module.git
+  version: 1.0.1
+  lock: false
+- name: lambda
+  source: git@github.com:pbs-common/terraform-aws-lambda-module.git
+  version: 2.0.1
+  lock: false
+- name: lambda-permission
+  source: git@github.com:pbs-common/terraform-aws-lambda-permission-module.git
+  version: 1.0.1
+  lock: false
+- name: namespace
+  source: git@github.com:pbs-common/terraform-aws-namespace-module.git
+  version: 0.1.26
+  lock: false
+- name: rds
+  source: git@github.com:pbs-common/terraform-aws-rds-module.git
+  version: 2.3.0
+  lock: false
+- name: s3
+  source: git@github.com:pbs-common/terraform-aws-s3-module.git
+  version: 5.0.2
+  lock: false
+- name: sg-rule
+  source: git@github.com:pbs-common/terraform-aws-sg-rule-module.git
+  version: 1.0.1
+  lock: false
+- name: sns-topic
+  source: git@github.com:pbs-common/terraform-aws-sns-topic-module.git
+  version: 1.0.2
+  lock: false
+- name: sns-topic-subscription
+  source: git@github.com:pbs-common/terraform-aws-sns-topic-subscription-module.git
+  version: 1.0.1
+  lock: false
+- name: synthetics
+  source: git@github.com:pbs-common/terraform-aws-synthetics-module.git
+  version: 3.0.1
+  lock: false
+- name: virtual-gateway
+  source: git@github.com:pbs-common/terraform-aws-virtual-gateway-module.git
+  version: 1.0.1
+  lock: false
+- name: virtual-router
+  source: git@github.com:pbs-common/terraform-aws-virtual-router-module.git
+  version: 0.0.29
+  lock: false
+- name: virtual-service
+  source: git@github.com:pbs-common/terraform-aws-virtual-service-module.git
+  version: 0.0.30
+  lock: false

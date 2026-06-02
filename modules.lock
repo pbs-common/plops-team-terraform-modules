@@ -2,96 +2,96 @@ modules:
   app-mesh:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-app-mesh-module.git
-    updated_at: '2026-06-02T15:25:25.397596'
+    updated_at: '2026-06-02T12:44:59.252089'
   cloudfront:
     version: 4.0.2
     source: git@github.com:pbs-common/terraform-aws-cloudfront-module.git
-    updated_at: '2026-06-02T15:25:27.699429'
+    updated_at: '2026-06-02T12:44:59.898566'
   cloudwatch-alarms:
     version: 1.1.0
     source: git@github.com:pbs-common/terraform-aws-cloudwatch-alarms-module.git
-    updated_at: '2026-06-02T15:25:30.050859'
+    updated_at: '2026-06-02T12:45:00.501203'
   cloudwatch-event-rule:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-cloudwatch-event-rule-module.git
-    updated_at: '2026-06-02T15:25:32.394103'
+    updated_at: '2026-06-02T12:45:01.175149'
   dynamodb:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-dynamodb-module.git
-    updated_at: '2026-06-02T15:25:34.805636'
+    updated_at: '2026-06-02T12:45:01.869255'
   ecr:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-ecr-module.git
-    updated_at: '2026-06-02T15:25:37.293227'
+    updated_at: '2026-06-02T12:45:02.603797'
   ecs-cluster:
     version: 2.0.1
     source: git@github.com:pbs-common/terraform-aws-ecs-cluster-module.git
-    updated_at: '2026-06-02T15:25:39.680100'
+    updated_at: '2026-06-02T12:45:03.318488'
   ecs-service:
     version: 11.0.0
     source: git@github.com:pbs-common/terraform-aws-ecs-service-module.git
-    updated_at: '2026-06-02T15:25:42.119163'
+    updated_at: '2026-06-02T12:45:04.019461'
   ecs-task-definition:
     version: 3.0.2
     source: git@github.com:pbs-common/terraform-aws-ecs-task-definition-module.git
-    updated_at: '2026-06-02T15:25:44.467575'
+    updated_at: '2026-06-02T12:45:04.785531'
   efs:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-efs-module.git
-    updated_at: '2026-06-02T15:25:46.890587'
+    updated_at: '2026-06-02T12:45:05.443126'
   elasticache-memcached:
     version: 2.1.0
     source: git@github.com:pbs-common/terraform-aws-elasticache-memcached-module.git
-    updated_at: '2026-06-02T15:25:49.223243'
+    updated_at: '2026-06-02T12:45:06.052999'
   iam-role:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-iam-role-module.git
-    updated_at: '2026-06-02T15:25:51.675412'
+    updated_at: '2026-06-02T12:45:06.726270'
   lambda:
     version: 2.0.1
     source: git@github.com:pbs-common/terraform-aws-lambda-module.git
-    updated_at: '2026-06-02T15:25:54.166436'
+    updated_at: '2026-06-02T12:45:07.380465'
   lambda-permission:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-lambda-permission-module.git
-    updated_at: '2026-06-02T15:25:56.307124'
+    updated_at: '2026-06-02T12:45:08.010895'
   namespace:
     version: 0.1.26
     source: git@github.com:pbs-common/terraform-aws-namespace-module.git
-    updated_at: '2026-06-02T15:25:58.629088'
+    updated_at: '2026-06-02T12:45:08.568442'
   rds:
     version: 2.3.0
     source: git@github.com:pbs-common/terraform-aws-rds-module.git
-    updated_at: '2026-06-02T15:26:00.980474'
+    updated_at: '2026-06-02T12:45:09.283886'
   s3:
     version: 5.0.2
     source: git@github.com:pbs-common/terraform-aws-s3-module.git
-    updated_at: '2026-06-02T15:26:03.455155'
+    updated_at: '2026-06-02T12:45:09.968018'
   sg-rule:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-sg-rule-module.git
-    updated_at: '2026-06-02T15:26:06.823361'
+    updated_at: '2026-06-02T12:45:10.627260'
   sns-topic:
     version: 1.0.2
     source: git@github.com:pbs-common/terraform-aws-sns-topic-module.git
-    updated_at: '2026-06-02T15:26:09.165279'
+    updated_at: '2026-06-02T12:45:11.263115'
   sns-topic-subscription:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-sns-topic-subscription-module.git
-    updated_at: '2026-06-02T15:26:11.507017'
+    updated_at: '2026-06-02T12:45:11.881518'
   synthetics:
     version: 3.0.1
     source: git@github.com:pbs-common/terraform-aws-synthetics-module.git
-    updated_at: '2026-06-02T15:26:13.875801'
+    updated_at: '2026-06-02T12:45:12.500506'
   virtual-gateway:
     version: 1.0.1
     source: git@github.com:pbs-common/terraform-aws-virtual-gateway-module.git
-    updated_at: '2026-06-02T15:26:16.191642'
+    updated_at: '2026-06-02T12:45:13.139981'
   virtual-router:
     version: 0.0.29
     source: git@github.com:pbs-common/terraform-aws-virtual-router-module.git
-    updated_at: '2026-06-02T15:26:18.620291'
+    updated_at: '2026-06-02T12:45:13.751530'
   virtual-service:
     version: 0.0.30
     source: git@github.com:pbs-common/terraform-aws-virtual-service-module.git
-    updated_at: '2026-06-02T15:26:21.034474'
+    updated_at: '2026-06-02T12:45:14.429799'

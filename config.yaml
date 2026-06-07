@@ -1,4 +1,4 @@
-version: 1.0.0
+version: 1.1.0
 team: plops
 repositories:
 - pbs-digital/vrm
@@ -30,7 +30,7 @@ modules:
   lock: false
 - name: cloudwatch-event-rule
   source: git@github.com:pbs-common/terraform-aws-cloudwatch-event-rule-module.git
-  version: 1.0.1
+  version: 1.0.3
   lock: false
 - name: dynamodb
   source: git@github.com:pbs-common/terraform-aws-dynamodb-module.git
@@ -50,7 +50,7 @@ modules:
   lock: false
 - name: ecs-task-definition
   source: git@github.com:pbs-common/terraform-aws-ecs-task-definition-module.git
-  version: 3.0.2
+  version: 3.2.0
   lock: false
 - name: efs
   source: git@github.com:pbs-common/terraform-aws-efs-module.git
@@ -58,11 +58,11 @@ modules:
   lock: false
 - name: elasticache-memcached
   source: git@github.com:pbs-common/terraform-aws-elasticache-memcached-module.git
-  version: 2.1.0
+  version: 2.1.1
   lock: false
 - name: iam-role
   source: git@github.com:pbs-common/terraform-aws-iam-role-module.git
-  version: 1.0.1
+  version: 1.0.2
   lock: false
 - name: lambda
   source: git@github.com:pbs-common/terraform-aws-lambda-module.git
@@ -86,7 +86,7 @@ modules:
   lock: false
 - name: sg-rule
   source: git@github.com:pbs-common/terraform-aws-sg-rule-module.git
-  version: 1.0.1
+  version: 1.0.2
   lock: false
 - name: sns-topic
   source: git@github.com:pbs-common/terraform-aws-sns-topic-module.git

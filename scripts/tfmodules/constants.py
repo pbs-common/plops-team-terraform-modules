@@ -54,14 +54,22 @@ ORG_NAME = "pbs-common"
 RESOURCE_TO_MODULE_MAP = {
     # S3 resources
     "aws_s3_bucket": "terraform-aws-s3-module",
-    "aws_s3_bucket_policy": "terraform-aws-s3-module",
     "aws_s3_bucket_public_access_block": "terraform-aws-s3-module",
     "aws_s3_bucket_versioning": "terraform-aws-s3-module",
     "aws_s3_bucket_acl": "terraform-aws-s3-module",
     "aws_s3_bucket_cors_configuration": "terraform-aws-s3-module",
     "aws_s3_bucket_lifecycle_configuration": "terraform-aws-s3-module",
     "aws_s3_bucket_server_side_encryption_configuration": "terraform-aws-s3-module",
+    "aws_s3_bucket_inventory": "terraform-aws-s3-module",
+    "aws_s3_bucket_ownership_controls": "terraform-aws-s3-module",
+    "aws_s3_bucket_replication_configuration": "terraform-aws-s3-module",
     "aws_s3_object": "terraform-aws-s3-module",
+
+    # S3 Bucket Policy resources
+    "aws_s3_bucket_policy": "terraform-aws-s3-bucket-policy-module",
+
+    # S3 Bucket Notification resources
+    "aws_s3_bucket_notification": "terraform-aws-bucket-notification-module",
 
     # Lambda resources
     "aws_lambda_function": "terraform-aws-lambda-module",
@@ -78,6 +86,12 @@ RESOURCE_TO_MODULE_MAP = {
     "aws_rds_cluster_instance": "terraform-aws-rds-module",
     "aws_rds_cluster_parameter_group": "terraform-aws-rds-module",
     "aws_db_option_group": "terraform-aws-rds-module",
+    "aws_db_proxy": "terraform-aws-rds-module",
+    "aws_db_proxy_default_target_group": "terraform-aws-rds-module",
+    "aws_db_proxy_endpoint": "terraform-aws-rds-module",
+    "aws_db_proxy_target": "terraform-aws-rds-module",
+    "aws_secretsmanager_secret": "terraform-aws-rds-module",
+    "aws_secretsmanager_secret_version": "terraform-aws-rds-module",
 
     # ECS Cluster resources
     "aws_ecs_cluster": "terraform-aws-ecs-cluster-module",
@@ -99,13 +113,11 @@ RESOURCE_TO_MODULE_MAP = {
     "aws_appautoscaling_target": "terraform-aws-ecs-service-module",
     "aws_appautoscaling_policy": "terraform-aws-ecs-service-module",
     "aws_appautoscaling_scheduled_action": "terraform-aws-ecs-service-module",
+    "aws_eip": "terraform-aws-ecs-service-module",
+    "aws_service_discovery_service": "terraform-aws-ecs-service-module",
 
     # ECS Task Definition resources
     "aws_ecs_task_definition": "terraform-aws-ecs-task-definition-module",
-
-    # ECS Task Definition scheduler resources
-    "aws_cloudwatch_event_rule": "terraform-aws-ecs-cron-module",
-    "aws_cloudwatch_event_target": "terraform-aws-ecs-cron-module",
 
     # CloudFront resources
     "aws_cloudfront_distribution": "terraform-aws-cloudfront-module",
@@ -114,6 +126,10 @@ RESOURCE_TO_MODULE_MAP = {
     "aws_cloudfront_response_headers_policy": "terraform-aws-cloudfront-response-headers-policy-module",
     "aws_cloudfront_function": "terraform-aws-cloudfront-function-module",
     "aws_cloudfront_origin_access_identity": "terraform-aws-cloudfront-module",
+    "aws_cloudfront_origin_access_control": "terraform-aws-cloudfront-module",
+    "aws_cloudwatch_log_delivery": "terraform-aws-cloudfront-module",
+    "aws_cloudwatch_log_delivery_destination": "terraform-aws-cloudfront-module",
+    "aws_cloudwatch_log_delivery_source": "terraform-aws-cloudfront-module",
 
     # IAM resources
     "aws_iam_role": "terraform-aws-iam-role-module",
@@ -149,19 +165,70 @@ RESOURCE_TO_MODULE_MAP = {
     "aws_elasticache_cluster": "terraform-aws-elasticache-memcached-module",
     "aws_elasticache_replication_group": "terraform-aws-elasticache-redis-standalone-module",
     "aws_elasticache_subnet_group": "terraform-aws-elasticache-memcached-module",
-    "aws_elasticache_parameter_group": "terraform-aws-elasticache-memcached-module",
+    "aws_elasticache_parameter_group": "terraform-aws-elasticache-parameter-group-module",
+    "aws_elasticache_serverless_cache": "terraform-aws-elasticache-serverless-redis-and-memcached-module",
 
     # EFS resources
     "aws_efs_file_system": "terraform-aws-efs-module",
     "aws_efs_mount_target": "terraform-aws-efs-module",
     "aws_efs_access_point": "terraform-aws-efs-module",
+    "aws_efs_backup_policy": "terraform-aws-efs-module",
 
     # Security Group resources
     "aws_security_group": "terraform-aws-sg-rule-module",  # TODO: Module only handles rules, not groups
     "aws_security_group_rule": "terraform-aws-sg-rule-module",
+    "aws_vpc_security_group_ingress_rule": "terraform-aws-sg-rule-module",
+    "aws_vpc_security_group_egress_rule": "terraform-aws-sg-rule-module",
 
     # CloudWatch Synthetics resources
     "aws_synthetics_canary": "terraform-aws-synthetics-module",
+
+    # WAFv2 resources
+    "aws_wafv2_ip_set": "terraform-aws-wafv2-rule-group-module",
+    "aws_wafv2_regex_pattern_set": "terraform-aws-wafv2-rule-group-module",
+    "aws_wafv2_rule_group": "terraform-aws-wafv2-rule-group-module",
+
+    # Amplify resources
+    "aws_amplify_app": "terraform-aws-amplify-module",
+    "aws_amplify_backend_environment": "terraform-aws-amplify-module",
+    "aws_amplify_branch": "terraform-aws-amplify-module",
+    "aws_amplify_domain_association": "terraform-aws-amplify-module",
+    "aws_amplify_webhook": "terraform-aws-amplify-module",
+
+    # Lambda API (API Gateway v2) resources
+    "aws_apigatewayv2_api": "terraform-aws-lambda-api-module",
+    "aws_apigatewayv2_api_mapping": "terraform-aws-lambda-api-module",
+    "aws_apigatewayv2_domain_name": "terraform-aws-lambda-api-module",
+    "aws_apigatewayv2_integration": "terraform-aws-lambda-api-module",
+    "aws_apigatewayv2_route": "terraform-aws-lambda-api-module",
+    "aws_apigatewayv2_stage": "terraform-aws-lambda-api-module",
+
+    # Lambda LB resources
+    "aws_lb_target_group_attachment": "terraform-aws-lambda-lb-module",
+
+    # Application Insights resources
+    "aws_applicationinsights_application": "terraform-aws-application-insights-module",
+
+    # App Mesh resources
+    "aws_appmesh_mesh": "terraform-aws-app-mesh-module",
+    "aws_appmesh_virtual_gateway": "terraform-aws-virtual-gateway-module",
+    "aws_appmesh_virtual_router": "terraform-aws-virtual-router-module",
+    "aws_appmesh_virtual_service": "terraform-aws-virtual-service-module",
+
+    # Service Discovery namespace resources
+    "aws_service_discovery_http_namespace": "terraform-aws-namespace-module",
+    "aws_service_discovery_private_dns_namespace": "terraform-aws-namespace-module",
+    "aws_service_discovery_public_dns_namespace": "terraform-aws-namespace-module",
+
+    # FMS resources
+    "aws_fms_policy": "terraform-aws-fms-policy-module",
+
+    # Resource Group resources
+    "aws_resourcegroups_group": "terraform-aws-resource-group-module",
+
+    # SQS resources
+    "aws_sqs_queue": "terraform-aws-sqs-module",
+    "aws_sqs_queue_redrive_allow_policy": "terraform-aws-sqs-module",
 }
 
 # README markers
